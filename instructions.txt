@@ -1,0 +1,47 @@
+PROGRAM CONCEPTS:
+There are a number of "Players". Each player has a Rating, a Ratings Deviation (or RD), a Name, and an ID
+Their 'Rating' is the system's measure of how good the player is. Higher is better.
+Their 'Ratings Deviation' is the system's measure of how unsure the system is about how good the player is. Lower is better.
+Their 'Name' is a human-readable string people use to identify themselves.
+Their 'ID' is a number in the range 0 to 127, inclusive. This number is used by the system to identify a player. Notice that this means only 128 players are allowed at most.
+
+You can get players into the system either by filling in a batch player entry file and importing it, or by using the 'add player' option in the system. The batch file should be preferred. The batch file is a text file containing lines of the form:
+name '|' id
+
+where 'name' is the player's human-readable name (which may not contain a | character), and id is the desired id for the player.
+
+Adding a result to the system modifies the ratings and RDs of the players in the result. You can add a result to the system by selecting 'Add Result' or 'Add Batch Result' from the Results menu. 'Add Result' adds a single game. 'Add Batch Result' adds a batch of results from a file. The result is added by entering the winner's ID and then the loser's ID. Batched result files consist of a series of lines of the form
+
+win_id 'beats' lose_id
+OR
+'undo'
+
+Each line specifies a result where 'win_id' beat 'lose_id', or an undo operation
+
+The 'undo' option in the menu (and the undo entry in the batch file) only undoes the very last result add that occurred. You can't undo an undo operation, you can't undo adding a player, you can't undo an older result.
+
+The program can maintain several output windows, that display the current state of every player in the system. You can open a new output window via the menu option 'Windows'->'New window', or by pressing 'CTRL - W'. Each output window shows a table of every player in the system, with various properties displayed - name, effective rating, RD, wins, and losses. This behaves like a standard table control - you can click on each heading to sort by that value, you can drag columns around to resize, and so on.
+
+The program maintains an on-disk record of what results have been added to the system, the 'output file'. Every time a result is added to the system via the 'add result' menu option/hotkey, that result is then added to the output file. If you undo a result, the undo is added to the output file. It uses the same format as batched result files. It's worth noting that adding batch results to the system don't cause output to the output file and that the program will only ever append to the output file, not overwrite it. By default, the output file is 'temp.txt', but that can be changed in the 'results' menu.
+
+The end result of the batch-result, batch-entrant and output-file features are that the program can be quit and then restarted easily - batch-entering entrants and then batch-entering the results from the output file will reproduce the state of the system as it was when you exited the program. This also allows correction of matches entered earlier than the one result window and correction of entrant names, by closing the program, editing the entrants file or output file, and then re-running the program and loading everything in.
+
+Normal workflow for using the program:
+- Write out a list of entrants in the entrant file format in a text editor
+- Run the program, load in that list of entrants using the 'Add Batch' menu option under 'Players'
+- Open an output window using the 'New Window' option under 'Windows' (CTRL-W)
+- Enter a series of results using the 'Add Result' menu option under 'Results' (CTRL-R)
+	- If you accidentally enter a bad result, use the Undo option (CTRL-Z)
+
+Workflow for fixing old mistakes or wrong names for entrants:
+- Close the program
+- Edit the entrants batch file / output file
+- Start the program again
+- Batch-load the entrants
+- Batch-load the output file
+
+HOTKEYS:
+CTRL + R: Add result
+CTRL + Z: Undo
+CTRL + W: New results window
+CTRL + X: Quit

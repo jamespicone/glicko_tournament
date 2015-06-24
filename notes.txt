@@ -1,0 +1,9 @@
+THINGS:
+- Undo
+- Remove numbers on left
+- Batch wins/losses
+- Hotkeys
+- Confirm on win
+- Connectivity rules (nonevent or win/loss for one by mutual agreement)
+- Explanation of rules/etc.
+- Logging
