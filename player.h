@@ -1,10 +1,11 @@
 #ifndef PLAYER__H__
 #define PLAYER__H__
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 #include <QString>
 #include <QSet>
-
-#include <cmath>
 
 struct Player
 {	

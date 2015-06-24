@@ -33,6 +33,7 @@ SortIndex(0), SortOrder(Qt::AscendingOrder)
 	Model->setHorizontalHeaderLabels(headers);
 	
 	Model->setSortRole(Qt::UserRole);
+	Model->setRowCount(0);
 	
 	Table->verticalHeader()->hide();
 	Table->setModel(Model);
@@ -54,16 +55,7 @@ void PlayerDisplayWindow::sortChanged(int index, Qt::SortOrder order)
 
 void PlayerDisplayWindow::update_data(QList<Player> data)
 {
-	//Model->clear();
-	Model->setRowCount(data.size());
-	
-	/*
-	QStringList headers;
-	headers << "Name" << "Effective Rating" << "RD" << "ID" << "Wins" << "Losses";
-	
-	Model->setColumnCount(NUM_COLUMNS);
-	Model->setHorizontalHeaderLabels(headers);
-	Table->verticalHeader()->hide();*/
+	if (Model->rowCount() != data.size()) {Model->setRowCount(data.size());}
 	
 	int row = 0;
 	
@@ -71,9 +63,7 @@ void PlayerDisplayWindow::update_data(QList<Player> data)
 	{
 		if (!Model->item(row, COLUMN_NAME))
 		{
-			QList<QStandardItem*> items_list;
-			for (int i = 0; i < NUM_COLUMNS; ++i) {items_list += new QStandardItem();}
-			Model->insertRow(row, items_list);
+			for (int i = 0; i < NUM_COLUMNS; ++i) {Model->setItem(row, i, new QStandardItem());}
 		}
 		
 		Model->item(row, COLUMN_NAME)->setText(p.Name);
